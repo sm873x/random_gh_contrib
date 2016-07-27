@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8'>
+        <title>Random GitHub Contributor</title>
+
+        <meta name='description' content='Finds a random github contributor.'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+
+        <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' rel='stylesheet' type='text/css' integrity='sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7' crossorigin='anonymous'>
+        <link href='/css/styles.css' rel='stylesheet' type='text/css'>
+
+        <style>
+        #contributors img { width: 2em; }
+        </style>
+    </head>
+    <body>
+        <h1>Random GitHub Contributor</h1>
+
+        <form id='search'>
+            <fieldset>
+                <input type='text' id='api-key' placeholder='API key'>
+                <input type='text' id='query' placeholder='Search query...'>
+                <input type='submit' value='Find Contributor'>
+                <button class='clear'>Clear Data</button>
+            </fieldset>
+        </form>
+
+        <section id='contributors'>
+            <ul></ul>
+        </section>
+
+        <script src='https://code.jquery.com/jquery-1.12.0.min.js'></script>
+        
+        <script>
+            if (!window.jQuery) {
+                document.write(unescape('%3Cscript src="/js/vendor/jquery/dist/jquery.min.js">%3C/script>'));
+            }
+        </script>
+
+        <script src='/js/main.js'></script>
+    </body>
+</html>

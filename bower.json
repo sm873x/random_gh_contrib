@@ -1,0 +1,20 @@
+{
+  "name": "randomghcontrib",
+  "description": "Homework - Week 6 Day 24 - Random GitHub Contributor",
+  "main": "index.js",
+  "authors": [
+    "Stella"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/sm873x/random_gh_contrib",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.0"
+  }
+}

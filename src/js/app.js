@@ -14,7 +14,7 @@
         ns.contribArr = JSON.parse(localStorage.getItem('contributors'));
         console.log(ns.contribArr);
 
-        ns.contribArr.forEach(function getContributors(author, i) {
+        ns.contribArr.forEach(function getContributors(author) {
             $('#contributors ul')
                 .append('<li class=' + author.name + '>' + author.name + '</li>\
                         <img src=' + author.avatar + '>');

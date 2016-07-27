@@ -6,14 +6,15 @@
 
     window.addEventListener( 'load', function() {
         console.log('load');
+
         if (!(JSON.parse(localStorage.getItem('contributors')))) {
             return;
         }
-                
-        ns.contribArr = JSON.parse(localStorage.getItem('contributors'));
 
+        ns.contribArr = JSON.parse(localStorage.getItem('contributors'));
         console.log(ns.contribArr);
-        ns.contribArr.forEach(function getContributors(author, i) {
+
+        ns.contribArr.forEach(function getContributors(author) {
             $('#contributors ul')
                 .append('<li class=' + author.name + '>' + author.name + '</li>\
                         <img src=' + author.avatar + '>');
@@ -96,12 +97,5 @@
     }
 
 })(window.app);
-
-
-// e.preventDefault();
-//
-// $.ajax('https://api.github.com/search/repositories?q=tracker')
-// .then(function(data) { console.log(data); return $.ajax('https://api.github.com/repos/antonioribeiro/tracker/commits'); })
-// .then(function(data) { console.log(data); });
 
 //# sourceMappingURL=main.js.map

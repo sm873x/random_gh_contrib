@@ -33,8 +33,8 @@
                 ns.contribArr.push(contribList);
                 localStorage.setItem('contributors', JSON.stringify(ns.contribArr));
             })
-            .catch(function handleErrors() {
-                ns.error();
+            .catch(function handleErrors(xhr) {
+                ns.error(xhr);
             });
     });
 
@@ -109,7 +109,7 @@
 
         ns.author = commitData.author.login;
         ns.avatar = commitData.author.avatar_url;
-        
+
         $('#contributors ul')
             .append('<li class=' + ns.author + '>' + ns.author + '</li>\
                     <img src=' + ns.avatar + '>');

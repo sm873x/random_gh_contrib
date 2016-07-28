@@ -4,24 +4,6 @@
     window.app = ns = ( ns || {} );
     ns.contribArr = [];
 
-    window.addEventListener( 'load', function loadPrevContrib() {
-        console.log('load');
-
-        if (!(JSON.parse(localStorage.getItem('contributors')))) {
-            return;
-        }
-
-        ns.contribArr = JSON.parse(localStorage.getItem('contributors'));
-        console.log(ns.contribArr);
-
-        ns.contribArr.forEach(function getContributors(author) {
-            $('#contributors ul')
-                .append('<li class=' + author.name + '>' + author.name + '</li>\
-                        <img src=' + author.avatar + '>');
-        });
-
-    });
-
     $('#search').on('submit', function findContributor(e) {
         console.log('start');
         e.preventDefault();
@@ -50,8 +32,10 @@
                 var contribList = {name: ns.author, avatar: ns.avatar};
                 ns.contribArr.push(contribList);
                 localStorage.setItem('contributors', JSON.stringify(ns.contribArr));
+            })
+            .catch(function handleErrors() {
+                ns.error();
             });
-
     });
 
     /**
@@ -62,7 +46,7 @@
      */
     function getRepos(token, query) {
         return $.ajax({
-            url: 'https://api.github.com/search/repositories?q=' + query + '=desc',
+            url: 'https://api.github.com/search/repositories?q=' + query + '&=desc',
             method: 'get',
             headers: {
                 'Authorization': 'token ' + token
@@ -77,6 +61,9 @@
      * @return {Object}     Selected repo
      */
     function getRandoRepo(data) {
+        if (!data.items) {
+            throw new Error ('There is no repo data');
+        }
         var repoArr = data.items;
         return repoArr[Math.floor(Math.random() * repoArr.length)];
     }
@@ -103,6 +90,9 @@
      * @return {Object}     Selected commit
      */
     function getRandoCommit(data) {
+        if (!data) {
+            throw new Error ('There is no commit data');
+        }
         var commitArr = data;
         return commitArr[Math.floor(Math.random() * commitArr.length)];
     }
@@ -110,12 +100,16 @@
     /**
      * Display commit author username and avatar img
      * @param  {Object} commitData Selected commit
-     * @return {void}          
+     * @return {void}
      */
     function dispAuthor(commitData) {
+        if (!commitData.author) {
+            return;
+        }
+
         ns.author = commitData.author.login;
         ns.avatar = commitData.author.avatar_url;
-
+        
         $('#contributors ul')
             .append('<li class=' + ns.author + '>' + ns.author + '</li>\
                     <img src=' + ns.avatar + '>');

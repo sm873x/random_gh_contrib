@@ -17,14 +17,19 @@
     <body>
         <h1>Random GitHub Contributor</h1>
 
+        <section class='info-area'>
+            <p class='alert-area'></p>
+        </section>
+
         <form id='search'>
             <fieldset>
                 <input type='text' id='api-key' placeholder='API key'>
                 <input type='text' id='query' placeholder='Search query...'>
                 <input type='submit' value='Find Contributor'>
-                <button class='clear'>Clear Data</button>
             </fieldset>
         </form>
+
+        <button class='clear'>Clear Data</button>
 
         <section id='contributors'>
             <ul></ul>

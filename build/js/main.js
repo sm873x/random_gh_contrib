@@ -4,7 +4,7 @@
     window.app = ns = ( ns || {} );
     ns.contribArr = [];
 
-    window.addEventListener( 'load', function() {
+    window.addEventListener( 'load', function loadPrevContrib() {
         console.log('load');
 
         if (!(JSON.parse(localStorage.getItem('contributors')))) {
@@ -32,14 +32,14 @@
         console.log('token', ns.token);
 
         getRepos(ns.token, ns.query)
-            .then(function(repos) {
+            .then(function retrieveRepos(repos) {
                 console.log(repos);
                 var chosenRepo = getRandoRepo(repos);
 
                 console.log(chosenRepo);
                 return getCommits(chosenRepo);
             })
-            .then(function(commits) {
+            .then(function retrieveCommits(commits) {
                 console.log(commits);
 
                 var chosenCommit = getRandoCommit(commits);
@@ -49,15 +49,20 @@
 
                 var contribList = {name: ns.author, avatar: ns.avatar};
                 ns.contribArr.push(contribList);
-                // localStorage.setItem('contributors', JSON.stringify(contribList));
                 localStorage.setItem('contributors', JSON.stringify(ns.contribArr));
             });
 
     });
 
+    /**
+     * Get repos from github with specific query
+     * @param  {String} token Personal access token
+     * @param  {String} query Search term
+     * @return {Promise} JQuery XHR Object that implements promise methods
+     */
     function getRepos(token, query) {
         return $.ajax({
-            url: 'https://api.github.com/search/repositories?q=' + query,
+            url: 'https://api.github.com/search/repositories?q=' + query + '=desc',
             method: 'get',
             headers: {
                 'Authorization': 'token ' + token
@@ -66,11 +71,21 @@
         });
     }
 
+    /**
+     * Select random repo
+     * @param  {Object} data Array-like object of repos
+     * @return {Object}     Selected repo
+     */
     function getRandoRepo(data) {
         var repoArr = data.items;
         return repoArr[Math.floor(Math.random() * repoArr.length)];
     }
 
+    /**
+     * Get all commits from repo
+     * @param  {Object} repo Selected repo
+     * @return {Promise} JQuery XHR Object that implements promise methods
+     */
     function getCommits(repo) {
         return $.ajax({
             url: 'https://api.github.com/repos/' + repo.owner.login + '/' + repo.name + '/commits',
@@ -82,11 +97,21 @@
         });
     }
 
+    /**
+     * Select random commit
+     * @param  {Array} data Array of commits
+     * @return {Object}     Selected commit
+     */
     function getRandoCommit(data) {
         var commitArr = data;
         return commitArr[Math.floor(Math.random() * commitArr.length)];
     }
 
+    /**
+     * Display commit author username and avatar img
+     * @param  {Object} commitData Selected commit
+     * @return {void}          
+     */
     function dispAuthor(commitData) {
         ns.author = commitData.author.login;
         ns.avatar = commitData.author.avatar_url;
